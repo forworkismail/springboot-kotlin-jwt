@@ -1,5 +1,5 @@
 package com.github.forworkismail.springbootkotlinjwt.authentication.dto
 
-data class RegisterUserResponse (
+data class LoginResponse (
         val jwtToken: String
         )

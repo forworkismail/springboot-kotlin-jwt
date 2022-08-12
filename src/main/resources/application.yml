@@ -20,4 +20,4 @@ server:
   servlet:
     contextPath: /api
 jwt:
-  secret: "iofwjeov0w9erg094tqj423ur;23dszv3gt8m48m45q890erqa5"
+  secret: "iofwjeov0w9e23dszv3gt8m48m45q890erqa5rg094tqj423ur;23dszv3gt8m48m45q89ov0w9e23dszv3gt8m48m45q890erqa5rg094tqj423ur;23dszv3gt0erqa5"
