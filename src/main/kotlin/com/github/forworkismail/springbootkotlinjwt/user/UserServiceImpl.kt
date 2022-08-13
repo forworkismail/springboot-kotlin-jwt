@@ -1,11 +1,12 @@
 package com.github.forworkismail.springbootkotlinjwt.user
 
+import com.github.forworkismail.springbootkotlinjwt.role.RoleRepository
 import com.github.forworkismail.springbootkotlinjwt.user.dto.CreateUserDto
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
-class UserServiceImpl(private val userRepository: UserRepository) : UserService {
+class UserServiceImpl(private val userRepository: UserRepository, private val roleRepository: RoleRepository) : UserService {
     override fun getAll(): List<User> {
         return userRepository.findAll()
     }
@@ -36,5 +37,13 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
 
     override fun delete(id: Long) {
         userRepository.deleteById(id)
+    }
+
+    override fun addRoleToUser(username: String, roleName: String): User? {
+        return userRepository.findByUsername(username)?.let {
+            userRepository.save(it.copy(
+                    roles = it.roles + roleRepository.findByName(roleName)!!
+            ))
+        }
     }
 }

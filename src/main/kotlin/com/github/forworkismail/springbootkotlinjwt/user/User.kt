@@ -30,4 +30,8 @@ class User(
     fun copy(username: String, password: String): User {
         return User(username = username, password = password)
     }
+
+    fun copy(roles: Set<Role>): User {
+        return User(roles = roles)
+    }
 }

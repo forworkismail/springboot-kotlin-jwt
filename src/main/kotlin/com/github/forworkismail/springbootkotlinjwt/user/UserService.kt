@@ -11,4 +11,5 @@ interface UserService {
     fun create(createUserDto: CreateUserDto): User
     fun update(id: Long, User: User): User?
     fun delete(id: Long)
+    fun addRoleToUser(username: String, roleName: String): User?
 }

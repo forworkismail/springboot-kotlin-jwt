@@ -11,4 +11,6 @@ class Role (
     val id: Long = 0,
 
     val name: String = "",
-)
+) {
+    fun copy(name: String) = Role(id, name)
+}
