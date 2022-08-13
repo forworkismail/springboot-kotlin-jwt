@@ -34,7 +34,8 @@ class SecurityConfiguration(private val userDetailsService: UserDetailsService, 
     fun filterChain(http: HttpSecurity): SecurityFilterChain? {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/authentication/**").permitAll()
+                .antMatchers("/authentication/login").permitAll()
+                .antMatchers("/authentication/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)

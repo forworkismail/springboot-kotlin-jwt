@@ -1,6 +1,7 @@
 package com.github.forworkismail.springbootkotlinjwt.user
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.github.forworkismail.springbootkotlinjwt.role.Role
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.*
 import javax.persistence.*
@@ -17,10 +18,14 @@ class User(
 
     @Column
     @JsonIgnore
-    var password: String = "",
+    val password: String = "",
 
     @Column(name = "created_at")
-    var createdAt: Date = Date()
+    val createdAt: Date = Date(),
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    val roles: Set<Role> = HashSet()
+
 ) {
     fun copy(username: String, password: String): User {
         return User(username = username, password = password)
