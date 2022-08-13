@@ -2,8 +2,7 @@ package com.github.forworkismail.springbootkotlinjwt.authentication
 
 import com.github.forworkismail.springbootkotlinjwt.authentication.dto.LoginRequest
 import com.github.forworkismail.springbootkotlinjwt.authentication.dto.LoginResponse
-import com.github.forworkismail.springbootkotlinjwt.user.UserService
-import com.github.forworkismail.springbootkotlinjwt.util.JWT.JWTService
+import com.github.forworkismail.springbootkotlinjwt.util.JWT.JwtService
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -17,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("authentication")
-class AuthenticationController( private val jwtService: JWTService,
-                                private val authenticationManager: AuthenticationManager,
-                                private val userDetailsService: UserDetailsService
+class AuthenticationController(private val jwtService: JwtService,
+                               private val authenticationManager: AuthenticationManager,
+                               private val userDetailsService: UserDetailsService
                                 ) {
 
     @PostMapping("login")

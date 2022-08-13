@@ -1,4 +1,4 @@
-package com.github.forworkismail.springbootkotlinjwt.Home
+package com.github.forworkismail.springbootkotlinjwt.home
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping

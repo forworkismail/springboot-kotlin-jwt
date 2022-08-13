@@ -1,5 +1,6 @@
 package com.github.forworkismail.springbootkotlinjwt.security
 
+import com.github.forworkismail.springbootkotlinjwt.util.JWT.JwtFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -16,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfiguration(private val userDetailsService: UserDetailsService) {
+class SecurityConfiguration(private val userDetailsService: UserDetailsService, private val jwtFilter: JwtFilter) {
     @Bean
     fun passwordEncoder(): PasswordEncoder? {
         return BCryptPasswordEncoder()
@@ -32,16 +33,13 @@ class SecurityConfiguration(private val userDetailsService: UserDetailsService) 
     @Throws(java.lang.Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain? {
         http.cors().and().csrf().disable()
-            .exceptionHandling().and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-            .authorizeRequests()
-            .antMatchers("/authentication/login").permitAll()
-            .anyRequest().authenticated()
-//        http.addFilterBefore(authenticationJwtTokenFilter, UsernamePasswordAuthenticationFilter::class.java)
+                .authorizeRequests()
+                .antMatchers("/authentication/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         return http.build()
     }
-
-
-
 
 }

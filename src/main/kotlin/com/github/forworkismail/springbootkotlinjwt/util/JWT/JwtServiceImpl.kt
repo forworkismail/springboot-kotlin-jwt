@@ -6,12 +6,11 @@ import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class JWT: JWTService {
+class JwtServiceImpl: JwtService {
 
     companion object {
         const val JWT_TOKEN_VALIDITY = 60 * 60 * 10

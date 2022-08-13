@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
 
-interface JWTService {
+interface JwtService {
     fun getUsernameFromToken(token: String): String?
     fun getExpirationDateFromToken(token: String): Date?
     fun getClaimFromToken(token: String, claimName: String): Any?
