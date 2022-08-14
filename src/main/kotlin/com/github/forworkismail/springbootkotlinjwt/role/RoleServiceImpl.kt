@@ -9,20 +9,20 @@ import org.springframework.stereotype.Service
 @Service
 class RoleServiceImpl(private val roleRepository: RoleRepository): RoleService {
 
-    private val log: Logger = LoggerFactory.getLogger(RoleController::class.java)
+    private val logger: Logger = LoggerFactory.getLogger(RoleController::class.java)
 
     override fun create(createRoleDto: RoleDto): Role {
-        log.info("Saving new user to the database")
+        logger.info("Creating new role with name: ${createRoleDto.name}")
         return roleRepository.save(Role(name = createRoleDto.name))
     }
 
     override fun getById(id: Long): Role? {
-        log.info("Get role by id: $id")
+        logger.info("Get role by id: $id")
         return roleRepository.findByIdOrNull(id)
     }
 
     override fun getAll(): List<Role> {
-        log.info("Get all roles")
+        logger.info("Get all roles")
         return roleRepository.findAll()
     }
 

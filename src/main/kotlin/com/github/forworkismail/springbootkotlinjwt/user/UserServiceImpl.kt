@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserServiceImpl(private val userRepository: UserRepository, private val roleRepository: RoleRepository) : UserService {
+
     override fun getAll(): List<User> {
         return userRepository.findAll()
     }
