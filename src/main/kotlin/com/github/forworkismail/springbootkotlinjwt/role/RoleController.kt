@@ -1,6 +1,8 @@
 package com.github.forworkismail.springbootkotlinjwt.role
 
 import com.github.forworkismail.springbootkotlinjwt.role.dto.RoleDto
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.*
 class RoleController(private val roleService: RoleService) {
 
     @GetMapping
-    fun getRoles(): List<Role> = roleService.getAll()
+    fun getRoles(): List<Role>  {
+        return roleService.getAll()
+    }
 
     @PostMapping
     fun createRole(@RequestBody createRoleDto: RoleDto): ResponseEntity<Any> {
