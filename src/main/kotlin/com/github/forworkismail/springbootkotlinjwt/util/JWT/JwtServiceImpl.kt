@@ -14,6 +14,7 @@ class JwtServiceImpl: JwtService {
 
     companion object {
         const val JWT_TOKEN_VALIDITY = 60 * 60 * 10
+        const val JWT_REFRESH_TOKEN_VALIDITY = 60 * 60 * 24 * 7
     }
 
     @Value("\${jwt.secret}")
@@ -42,7 +43,9 @@ class JwtServiceImpl: JwtService {
     }
 
     override fun generateToken(userDetails: UserDetails): String {
+        // add claims from inside userDetails to object
         val claims = HashMap<String, Any>()
+        claims["roles"] = userDetails.authorities
         return doGenerateToken(claims, userDetails.username)
     }
 
@@ -56,6 +59,13 @@ class JwtServiceImpl: JwtService {
     override fun validateToken(token: String, userDetails: UserDetails): Boolean {
         val username = getUsernameFromToken(token)
         return username == userDetails.username && !isTokenExpired(token)
+    }
+
+    override fun generateRefreshToken(userDetails: UserDetails): String {
+        val createdDate = Date()
+        val expirationDate = Date(createdDate.time + JWT_REFRESH_TOKEN_VALIDITY * 1000)
+        return Jwts.builder().setSubject(userDetails.username).setIssuedAt(createdDate)
+            .setExpiration(expirationDate).signWith(Keys.hmacShaKeyFor(secret.toByteArray()), SignatureAlgorithm.HS512).compact()
     }
 
 

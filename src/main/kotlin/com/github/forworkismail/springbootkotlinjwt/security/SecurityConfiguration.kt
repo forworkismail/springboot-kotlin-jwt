@@ -4,6 +4,7 @@ import com.github.forworkismail.springbootkotlinjwt.util.JWT.JwtFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -17,16 +18,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfiguration(private val userDetailsService: UserDetailsService, private val jwtFilter: JwtFilter) {
-    @Bean
-    fun passwordEncoder(): PasswordEncoder? {
-        return BCryptPasswordEncoder()
-    }
+class SecurityConfiguration(private val userDetailsService: UserDetailsService,
+                            private val jwtFilter: JwtFilter,
+                            private val bCryptPasswordEncoder: BCryptPasswordEncoder
+) {
 
     @Bean
     @Throws(Exception::class)
     fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager? {
         return authenticationConfiguration.authenticationManager
+    }
+
+    @Throws(Exception::class)
+    fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(bCryptPasswordEncoder)
     }
 
     @Bean

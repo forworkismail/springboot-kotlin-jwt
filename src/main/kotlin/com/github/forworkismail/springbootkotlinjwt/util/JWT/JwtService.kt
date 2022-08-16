@@ -13,4 +13,6 @@ interface JwtService {
     fun generateToken(userDetails: UserDetails): String
     fun doGenerateToken(claims: Map<String, Any>, subject: String): String
     fun validateToken(token: String, userDetails: UserDetails): Boolean
+
+    fun generateRefreshToken(userDetails: UserDetails): String
 }

@@ -10,10 +10,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class UserServiceImpl(private val userRepository: UserRepository, private val roleRepository: RoleRepository) : UserService,
+class UserServiceImpl(
+    private val userRepository: UserRepository,
+    private val roleRepository: RoleRepository,
+    private val passwordEncoder: PasswordEncoder
+) : UserService,
     UserDetailsService {
 
     private val logger: Logger = LoggerFactory.getLogger(RoleController::class.java)
@@ -33,7 +38,7 @@ class UserServiceImpl(private val userRepository: UserRepository, private val ro
     override fun create(createUserDto: CreateUserDto): User {
         return userRepository.save(User(
                 username = createUserDto.username,
-                password = createUserDto.password
+                password = passwordEncoder.encode(createUserDto.password),
         ))
     }
 
@@ -41,7 +46,7 @@ class UserServiceImpl(private val userRepository: UserRepository, private val ro
         return userRepository.findByIdOrNull(id)?.let {
             userRepository.save(it.copy(
                     username = user.username,
-                    password = user.password
+                    password = passwordEncoder.encode(user.password)
             ))
         }
     }

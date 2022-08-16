@@ -36,8 +36,9 @@ class AuthenticationController(private val jwtService: JwtService,
 
         val userDetails: UserDetails = userDetailsService.loadUserByUsername(body.username)
 
-        val token: String = jwtService.generateToken(userDetails)
+        val accessToken: String = jwtService.generateToken(userDetails)
+        val refreshToken: String = jwtService.generateRefreshToken(userDetails)
 
-        return LoginResponse(token)
+        return LoginResponse(accessToken, refreshToken)
     }
 }
