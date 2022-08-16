@@ -1,5 +1,6 @@
 package com.github.forworkismail.springbootkotlinjwt.util.JWT
 
+import com.github.forworkismail.springbootkotlinjwt.user.UserService
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class JwtFilter(private val jwtService: JwtService, private val userDetailsService: UserDetailsService):
+class JwtFilter(private val jwtService: JwtService, private val userService: UserDetailsService):
     OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -24,7 +25,7 @@ class JwtFilter(private val jwtService: JwtService, private val userDetailsServi
             val token = jwt.substring(7)
             val username = jwtService.getUsernameFromToken(token)
             if (username != null && SecurityContextHolder.getContext().authentication == null) {
-                val userDetails = userDetailsService.loadUserByUsername(username)
+                val userDetails = userService.loadUserByUsername(username)
                 if (jwtService.validateToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
                         .let {

@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 
-//@Configuration
-//class BeanConfiguration {
-//    @Bean
-//    fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
-//        return BCryptPasswordEncoder()
-//    }
-//}
+@Configuration
+class BeanConfiguration {
+    @Bean
+    fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
+        return BCryptPasswordEncoder()
+    }
+}
