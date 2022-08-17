@@ -45,7 +45,7 @@ class JwtServiceImpl: JwtService {
     override fun generateToken(userDetails: UserDetails): String {
         // add claims from inside userDetails to object
         val claims = HashMap<String, Any>()
-        claims["roles"] = userDetails.authorities
+        claims["roles"] = userDetails.authorities.map { it.authority }
         return doGenerateToken(claims, userDetails.username)
     }
 

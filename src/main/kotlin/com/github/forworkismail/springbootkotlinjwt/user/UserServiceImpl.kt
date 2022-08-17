@@ -74,7 +74,7 @@ class UserServiceImpl(
         logger.info("User $username found in the database")
         return org.springframework.security.core.userdetails.User(
             applicationUser.username, applicationUser.password,
-            applicationUser.roles.map { SimpleGrantedAuthority(it.name)}
+            applicationUser.roles.map { role -> SimpleGrantedAuthority(role.name) }
         )
     }
 }
